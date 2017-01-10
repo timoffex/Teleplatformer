@@ -1,6 +1,15 @@
-﻿public interface IScaleable {
+﻿
+/* Written by Timofey Peshin (timoffex)
+ * */
+
+public interface IScaleable {
 	/// <summary>
-	/// Scales the object outward from the left side by the given factor.
+	/// Scales the object horizontally by the given factor then moves the object
+	/// such that the x distance from its center to the given x position is scaled by factor.
+	/// 
+	/// Postcondition:
+	/// 	center.x - xPosition = factor * (oldCenter.x - xPosition)
+	/// 	scale.x = factor * oldScale.x
 	/// </summary>
-	void ScaleToRight (float factor);
+	void ScaleFromXPosition (float factor, float xPosition);
 }

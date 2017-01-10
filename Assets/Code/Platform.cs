@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+/* Written by Timofey Peshin (timoffex)
+ * */
 [RequireComponent (typeof (PlatformProperties))]
-public class Platform : MonoBehaviour, IScaleable {
+public class Platform : MonoBehaviour, IScaleResponder {
 
 	/* Contains properties of the platform that may be used in scripts. */
 	private PlatformProperties properties;
@@ -37,22 +40,11 @@ public class Platform : MonoBehaviour, IScaleable {
 			originalScale = 1;
 	}
 
-	void Start () {
-		StartCoroutine (Test ());
-	}
-
-	IEnumerator Test () {
-		while (true) {
-			ScaleToRight (1.02f);
-			yield return new WaitForSeconds (0.1f);
-		}
-	}
-
-
 	/// <summary>
-	/// Scales the platform outward from its left corner by the given factor.
+	/// Shrinks corners and expands middle section.
 	/// </summary>
-	public void ScaleToRight (float factor) {
+	/// <param name="factor">Factor.</param>
+	public void OnAfterScaledBy (float factor) {
 		
 		// { |       |= = = = =|       | }
 		//   ^       ^         ^       ^
@@ -60,9 +52,7 @@ public class Platform : MonoBehaviour, IScaleable {
 		//       ^                 ^
 		//    space1             space2
 
-		// left will neither move nor scale
-		// mid will expand outward from its left side
-		// right will move but not scale
+
 
 
 		float pos1, pos2, pos3, pos4;
@@ -75,23 +65,33 @@ public class Platform : MonoBehaviour, IScaleable {
 
 		// We want to preserve the spaces between the middle section and the corners to keep
 		// them the same as the platform designer set.
-		float space1, space2;
-		space1 = pos2 - pos1;
-		space2 = pos4 - pos3;
+		float scaledSpace1, scaledSpace2;
+		scaledSpace1 = pos2 - pos1;
+		scaledSpace2 = pos4 - pos3;
+
+		float correctSpace1, correctSpace2;
+		correctSpace1 = scaledSpace1 / factor;
+		correctSpace2 = scaledSpace2 / factor;
 
 
 		// scale up the middle section along the horizontal axis
 		var oldMiddleScale = middleSection.transform.localScale;
 		middleSection.transform.localScale = new Vector3 (oldMiddleScale.x * factor, oldMiddleScale.y, oldMiddleScale.z);
 
+		// scale down the corners
+		var oldLeftScale = leftCorner.transform.localScale;
+		var oldRightScale = rightCorner.transform.localScale;
+		leftCorner.transform.localScale = new Vector3 (oldLeftScale.x / factor, oldLeftScale.y, oldLeftScale.z);
+		rightCorner.transform.localScale = new Vector3 (oldRightScale.x / factor, oldRightScale.y, oldRightScale.z);
 
 
 		float newSpace1 = middleSection.bounds.min.x - pos1;
 		float newSpace2 = rightCorner.bounds.min.x - middleSection.bounds.max.x;
 
-		// move middleSection and rightCorner to return them to their original spacings
-		middleSection.transform.position += new Vector3 (space1 - newSpace1, 0, 0);
-		rightCorner.transform.position += new Vector3 ((space1 - newSpace1) + (space2 - newSpace2), 0, 0);
+		// move left and right corners to have correct spacing from middle section
+		leftCorner.transform.position += new Vector3 (newSpace1 - correctSpace1, 0, 0);
+		rightCorner.transform.position += new Vector3 (correctSpace2 - newSpace2, 0, 0);
+
 
 	}
 }

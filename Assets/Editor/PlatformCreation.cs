@@ -2,6 +2,9 @@
 using UnityEditor;
 using System.Collections;
 
+
+/* Written by Timofey Peshin (timoffex)
+ * */
 public class PlatformCreation {
 
 	[MenuItem ("GameObject/Create Other/Platform")]
@@ -14,7 +17,13 @@ public class PlatformCreation {
 		var platform = GameObject.Instantiate (defaultPlatform);
 		platform.name = "New Platform";
 
-		// Ping it as a visual cue.
+
+		// If an object is selected, add the platform as its child.
+		var selection = Selection.activeGameObject;
+		if (selection != null)
+			platform.transform.parent = selection.transform;
+
+		// Ping it as a visual cue. -- this part doesn't work for some reason
 		EditorGUIUtility.PingObject (platform);
 	}
 }
