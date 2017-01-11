@@ -78,36 +78,40 @@ public class LevelGenerator : MonoBehaviour {
 			// Try to put a chunk at that exit.
 			LevelChunk randChunk = null;
 			for (int numTries = 0; numTries < maxTriesPerExit; numTries++) {
-				randChunk = allKnownChunks [Random.Range (0, allKnownChunks.Count)];
-
-
-				// Instantiate the chunk.
-				randChunk = Instantiate (randChunk);
-
-
-				// Get the offset of the chunk's entrance from its pivot point.
-				var entranceOffset = randChunk.entryPoint.transform.position - randChunk.transform.position;
-
-
-				// Get the chunk's would-be position were it placed in the scene.
-				var position = exit.transform.position - entranceOffset;
-
-
-				// Reposition the chunk to that position.
-				randChunk.transform.position = position;
-
-
-				// Check if chunk collides with anything by using its collider's Cast() function.
-				RaycastHit2D[] results = new RaycastHit2D[1];
-				randChunk.GetCollider ().Cast (Vector2.up, results, 0.1f);
-
-
-				// If there was a collision, destroy the chunk.
-				if (results [0].collider != null) {
-					Destroy (randChunk);
-					randChunk = null;
-				} else // Otherwise, go to the next exit
-					break;
+//				randChunk = allKnownChunks [Random.Range (0, allKnownChunks.Count)];
+//
+//
+//				// Instantiate the chunk.
+//				randChunk = Instantiate (randChunk);
+//
+//
+//				// Get the offset of the chunk's entrance from its pivot point.
+//				var entranceOffset = randChunk.entryPoint.transform.position - randChunk.transform.position;
+//
+//
+//				// Get the chunk's would-be position were it placed in the scene.
+//				var position = exit.transform.position - entranceOffset;
+//
+//
+//				// Reposition the chunk to that position.
+//				randChunk.transform.position = position;
+//
+//
+//				// Check if chunk collides with any existing chunks.
+//				for (int allIdx = allChunksSorted.Count; allIdx >= 0; allIdx--) {
+//					var otherChunk = allChunksSorted [allIdx];
+//
+////					if (randChunk.GetCollider ().
+//				}
+//
+//
+//
+//				// If there was a collision, destroy the chunk.
+//				if (results [0].collider != null) {
+//					Destroy (randChunk);
+//					randChunk = null;
+//				} else // Otherwise, go to the next exit
+//					break;
 			}
 
 
