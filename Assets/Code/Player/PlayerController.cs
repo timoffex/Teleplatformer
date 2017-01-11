@@ -26,9 +26,16 @@ public class PlayerController : MonoBehaviour {
 
 	/// <summary>
 	/// The force to apply to the player when accelerating. The higher this is, the
-	/// faster the player reaches maxSpeed.
+	/// faster the player reaches maxSpeed. This should be a positive number.
 	/// </summary>
 	public float speedUpForce;
+
+	/// <summary>
+	/// The force to apply to the player when slowing down. The higher this is, the
+	/// faster the player can come to a stop or a slower speed. This should
+	/// be a positive number.
+	/// </summary>
+	public float slowDownForce;
 
 	/// <summary>
 	/// The force to apply to the player for jumping.
@@ -64,6 +71,44 @@ public class PlayerController : MonoBehaviour {
 				lastJumpTime = Time.fixedTime;
 			}
 
+		}
+
+		// Speed up to the right if speed < maxSpeed
+
+		var xSpeed = myRigidBody.velocity.x;
+
+		if (xSpeed < maxSpeed) {
+			// Speed up!
+
+
+			// Calculate the change in speed after applying speedUpForce
+			var changeInSpeed = speedUpForce * Time.fixedDeltaTime / myRigidBody.mass;
+
+			// If there is any excess, excessChange will be more than 0
+			var excessChange = Mathf.Max (0, changeInSpeed - (maxSpeed - xSpeed));
+
+
+			// Modified force that will not allow for any excess speed
+			var forceToApply = speedUpForce - excessChange * myRigidBody.mass / Time.fixedDeltaTime;
+
+			// Apply our rightward force (Unity multiplies this by Time.fixedDeltaTime to get the change in momentum)
+			myRigidBody.AddForce (Vector2.right * forceToApply);
+		} else if (xSpeed > maxSpeed) {
+			// Slow down!
+		
+
+			// Calculate the change in speed after applying slowDownForce
+			var changeInSpeed = slowDownForce * Time.fixedDeltaTime / myRigidBody.mass;
+
+			// If there is any excess, excessChange will be more than 0
+			var excessChange = Mathf.Max (0, changeInSpeed - (maxSpeed - xSpeed));
+
+
+			// Modified force that will not allow for any excess change
+			var forceToApply = slowDownForce - excessChange * myRigidBody.mass / Time.fixedDeltaTime;
+
+			// Apply our leftward force (Unity multiplies this by Time.fixedDeltaTime to get the change in momentum)
+			myRigidBody.AddForce (Vector2.left * forceToApply);
 		}
 	}
 
