@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour {
 		// Find all objects that are located at the "ground" gizmo
 		var allOverlaps = Physics2D.OverlapPointAll (ground.position);
 
-		// Return true if there if there is any non-trigger collider below us
-		return allOverlaps.Any ((col) => !col.isTrigger);
+		// Return true if there if there is any non-trigger collider below us that doesn't belong to us
+		return allOverlaps.Any ((col) => !col.isTrigger && col.gameObject != gameObject);
 	}
 }
