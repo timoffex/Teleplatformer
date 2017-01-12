@@ -19,7 +19,8 @@ public class FollowPlayer : MonoBehaviour {
 
 		if (thePlayer == null) {
 			var playerGO = GameObject.FindGameObjectWithTag ("Player");
-			thePlayer = playerGO.transform;
+			if (playerGO != null)
+				thePlayer = playerGO.transform;
 		}
 
 		if (thePlayer != null)
