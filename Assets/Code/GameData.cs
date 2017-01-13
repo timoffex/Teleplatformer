@@ -25,12 +25,11 @@ public class GameData : MonoBehaviour {
 
 
 	void Start () {
-		Vector3 playerPosition;
-		// TODO: generate a level using levelGenerator
-		// TODO: levelGenerator will return a playerPosition
+		
+		// Generate the beginning of a level and set the player position to
+		// the entrance of the starting chunk.
+		Vector3 playerPosition = levelGenerator.GenerateLevelStart (20);
 
-		// Temporary position
-		playerPosition = new Vector3 (0, 0, 0);
 
 
 
@@ -46,5 +45,10 @@ public class GameData : MonoBehaviour {
 			player = playerGO.transform;
 			player.position = playerPosition;
 		}
+	}
+
+
+	void Update () {
+		levelGenerator.GenerateChunksUpTo (player.transform.position.x + 20);
 	}
 }

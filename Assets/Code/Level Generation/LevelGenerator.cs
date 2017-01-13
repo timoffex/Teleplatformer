@@ -43,11 +43,6 @@ public class LevelGenerator : MonoBehaviour {
 		allChunksSorted = new List<LevelChunk> ();
 	}
 
-	void Start () {
-		GenerateLevelStart ();
-	}
-
-
 
 	/// <summary>
 	/// Generates chunks that should follow the given chunk and puts them into the scene.
@@ -78,30 +73,33 @@ public class LevelGenerator : MonoBehaviour {
 			// Try to put a chunk at that exit.
 			LevelChunk randChunk = null;
 			for (int numTries = 0; numTries < maxTriesPerExit; numTries++) {
-//				randChunk = allKnownChunks [Random.Range (0, allKnownChunks.Count)];
-//
-//
-//				// Instantiate the chunk.
-//				randChunk = Instantiate (randChunk);
-//
-//
-//				// Get the offset of the chunk's entrance from its pivot point.
-//				var entranceOffset = randChunk.entryPoint.transform.position - randChunk.transform.position;
-//
-//
-//				// Get the chunk's would-be position were it placed in the scene.
-//				var position = exit.transform.position - entranceOffset;
-//
-//
-//				// Reposition the chunk to that position.
-//				randChunk.transform.position = position;
-//
-//
+				randChunk = allKnownChunks [Random.Range (0, allKnownChunks.Count)];
+
+
+				// Instantiate the chunk.
+				randChunk = Instantiate (randChunk);
+
+
+				// Get the offset of the chunk's entrance from its pivot point.
+				var entranceOffset = randChunk.entryPoint.transform.position - randChunk.transform.position;
+
+
+				// Get the chunk's would-be position were it placed in the scene.
+				var position = exit.transform.position - entranceOffset;
+
+
+				// Reposition the chunk to that position.
+				randChunk.transform.position = position;
+
+				break;
+
+
+				// There is no collision check!
 //				// Check if chunk collides with any existing chunks.
 //				for (int allIdx = allChunksSorted.Count; allIdx >= 0; allIdx--) {
 //					var otherChunk = allChunksSorted [allIdx];
 //
-////					if (randChunk.GetCollider ().
+//					if (randChunk.GetCollider ().is
 //				}
 //
 //
@@ -129,7 +127,7 @@ public class LevelGenerator : MonoBehaviour {
 	}
 
 
-	private void GenerateChunksUpTo (float xPosition) {
+	public void GenerateChunksUpTo (float xPosition) {
 		// Queue used to generate chunks breadth-first
 		Queue<LevelChunk> chunksToProcess = new Queue<LevelChunk> ();
 
@@ -164,18 +162,22 @@ public class LevelGenerator : MonoBehaviour {
 	}
 
 
-	public Vector3 GenerateLevelStart () {
+	/// <summary>
+	/// Generates the start of a level by placing the starting chunk and then
+	/// generating chunks for a given horizontal distance. Returns the position where
+	/// the player object should be placed.
+	/// </summary>
+	public Vector3 GenerateLevelStart (float xDistance) {
 		var firstChunk = Instantiate (startingChunk);
 
 		leafChunks.Add (firstChunk);
 		allChunksSorted.Add (firstChunk);
 
-		GenerateChunksUpTo (10);
+		GenerateChunksUpTo (firstChunk.entryPoint.transform.position.x + xDistance);
 
 		return firstChunk.entryPoint.transform.position;
 	}
-
-
+	
 
 	/// <summary>
 	/// Returns a shuffled list of indices from 0 up to count-1. Used to iterate
