@@ -4,13 +4,9 @@ using System.Linq;
 
 /* Written by Timofey Peshin (timoffex)
  * */
-[RequireComponent (typeof (Rigidbody2D))]
+[RequireComponent (typeof (Rigidbody2D)),
+	RequireComponent (typeof (Player))]
 public class PlayerController : MonoBehaviour {
-
-	/// <summary>
-	/// Position this below the player where the ground-check should be done.
-	/// </summary>
-	public Collider2D groundCheck;
 
 
 	/// <summary>
@@ -44,11 +40,13 @@ public class PlayerController : MonoBehaviour {
 
 
 	private Rigidbody2D myRigidBody;
+	private Player myPlayer;
 
 
 	// This is for initializing variables
 	void Awake () {
 		myRigidBody = GetComponent<Rigidbody2D> ();
+		myPlayer = GetComponent<Player> ();
 	}
 	
 	// FixedUpdate is called once per frame and is synced with the physics system.
@@ -114,12 +112,6 @@ public class PlayerController : MonoBehaviour {
 
 
 	public bool IsGrounded () {
-
-		// Find all objects that are intersecting with the ground check
-		RaycastHit2D[] raycastHits = new RaycastHit2D [10];
-		int numHits = groundCheck.Cast (Vector2.down, raycastHits, 0);
-
-		// Return true if the groundCheck intersects with a non-trigger collider that doesn't belong to the player body.
-		return raycastHits.Take (numHits).Any ((hit) => !hit.collider.isTrigger && hit.collider.gameObject != gameObject);
+		return myPlayer.IsGrounded ();
 	}
 }

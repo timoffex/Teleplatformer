@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 /* Written by Timofey Peshin (timoffex)
  * */
@@ -8,10 +9,16 @@ using System.Collections.Generic;
 /// <summary>
 /// This is a container class for Player information: health, energy, abilities, etc.
 /// </summary>
+
 public class Player : MonoBehaviour {
 
 
 	public KeyCode ability1Key, ability2Key;
+
+	/// <summary>
+	/// Position this below the player where the ground-check should be done.
+	/// </summary>
+	public Collider2D groundCheck;
 
 
 	/// <summary>
@@ -25,6 +32,17 @@ public class Player : MonoBehaviour {
 	private Ability[] activeAbilities = new Ability[System.Enum.GetNames (typeof (AbilityControlType)).Length - 1];
 
 
+	
+
+
+	public bool IsGrounded () {
+		// Find all objects that are intersecting with the ground check
+		RaycastHit2D[] raycastHits = new RaycastHit2D [10];
+		int numHits = groundCheck.Cast (Vector2.down, raycastHits, 0);
+
+		// Return true if the groundCheck intersects with a non-trigger collider that doesn't belong to the player body.
+		return raycastHits.Take (numHits).Any ((hit) => !hit.collider.isTrigger && hit.collider.gameObject != gameObject);
+	}
 
 
 

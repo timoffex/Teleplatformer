@@ -578,7 +578,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 259b7e441469149168926eca671f7be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheck: {fileID: 58000012382038456}
   jumpDelay: 0.2
   maxSpeed: 3
   speedUpForce: 30
@@ -597,6 +596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ability1Key: 114
   ability2Key: 116
+  groundCheck: {fileID: 58000012382038456}
 --- !u!212 &212000010184450040
 SpriteRenderer:
   m_ObjectHideFlags: 1
