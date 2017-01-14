@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/* Written by Timofey Peshin (timoffex)
+ * */
 public class PowerupZone : MonoBehaviour {
 
 	/// <summary>

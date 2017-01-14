@@ -18,6 +18,7 @@ public class TriggerZone : MonoBehaviour {
 
 
 
+
 	/* These are Unity functions that are called when the underlying collider has "Is Trigger" set to true. */
 	void OnTriggerEnter2D (Collider2D col) {
 		if (col.CompareTag ("Player"))
