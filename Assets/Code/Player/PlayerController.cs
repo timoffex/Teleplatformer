@@ -8,6 +8,8 @@ using System.Linq;
 	RequireComponent (typeof (Player))]
 public class PlayerController : MonoBehaviour {
 
+	public KeyCode interactionKey;
+
 
 	/// <summary>
 	/// Minimum number of seconds that must pass between jumps.
@@ -42,6 +44,10 @@ public class PlayerController : MonoBehaviour {
 	private Rigidbody2D myRigidBody;
 	private Player myPlayer;
 
+	/// <summary>
+	/// The object we are interacting with currently. Null if no object.
+	/// </summary>
+	private InteractableObject interactingObject;
 
 	// This is for initializing variables
 	void Awake () {
@@ -71,8 +77,52 @@ public class PlayerController : MonoBehaviour {
 
 		}
 
-		// Speed up to the right if speed < maxSpeed
 
+		// Check if the player is trying to interact with an object.
+		if (Input.GetKey (interactionKey)) {
+			if (interactingObject == null) {
+				// If the player presses the interaction key and we're not interacting with anything,
+				// see if there is an object we can interact with.
+
+				// TODO: This is a little bit of a cheat.
+				var interactionCheckLocation = myPlayer.grabRopeLocation.position;
+
+				var potentialInteractableObjects = Physics2D.OverlapPointAll (interactionCheckLocation);
+
+				// Find all InteractableObjects among the colliders.
+				var interactableObjects = potentialInteractableObjects
+				.Select ((col) => col.GetComponent<InteractableObject> ())
+				.Where ((obj) => obj != null).ToList ();
+
+				// If an InteractableObject is found...
+				if (interactableObjects.Count > 0) {
+					// Interact with it!
+					interactingObject = interactableObjects [0];
+					interactingObject.StartInteraction (myPlayer);
+				}
+			}
+		} else if (Input.GetKeyUp (interactionKey)) {
+			// If the player releases the interaction key, we should stop interacting with our object.
+
+
+			// If we were interacting with an object...
+			if (interactingObject != null) {
+				// Stop interacting with it.
+				interactingObject.StopInteraction (myPlayer);
+				interactingObject = null;
+			}
+		}
+
+
+		// Speed up to the right if speed < maxSpeed, otherwise slow down.
+		SpeedUpRight ();
+	}
+
+
+	/// <summary>
+	/// Tries to make right-ward speed match maxSpeed.
+	/// </summary>
+	private void SpeedUpRight () {
 		var xSpeed = myRigidBody.velocity.x;
 
 		if (xSpeed < maxSpeed) {
@@ -93,7 +143,7 @@ public class PlayerController : MonoBehaviour {
 			myRigidBody.AddForce (Vector2.right * forceToApply);
 		} else if (xSpeed > maxSpeed) {
 			// Slow down!
-		
+
 
 			// Calculate the change in speed after applying slowDownForce
 			var changeInSpeed = slowDownForce * Time.fixedDeltaTime / myRigidBody.mass;
@@ -109,7 +159,6 @@ public class PlayerController : MonoBehaviour {
 			myRigidBody.AddForce (Vector2.left * forceToApply);
 		}
 	}
-
 
 	public bool IsGrounded () {
 		return myPlayer.IsGrounded ();

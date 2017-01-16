@@ -198,11 +198,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000010987881854, guid: 55ff259f5184b4a3f9c21508f43e918c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -6.133744
+      value: 4.42
       objectReference: {fileID: 0}
     - target: {fileID: 4000010987881854, guid: 55ff259f5184b4a3f9c21508f43e918c, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1.9003596
+      value: -0.18
       objectReference: {fileID: 0}
     - target: {fileID: 4000010987881854, guid: 55ff259f5184b4a3f9c21508f43e918c, type: 2}
       propertyPath: m_LocalPosition.z
@@ -263,6 +263,7 @@ MonoBehaviour:
   - {fileID: 114000013625042514, guid: 76113d2755eb543da9e035907e65af1c, type: 2}
   - {fileID: 114000010797442564, guid: d40ce4ff7f270436c8b6ffd261668891, type: 2}
   - {fileID: 114000010515358700, guid: e77c6e2ba54b44795b90e122543d4d6d, type: 2}
+  - {fileID: 114000013618872698, guid: fa2df4023341f44cd87689ec3fb96b71, type: 2}
   startingChunk: {fileID: 114000013415123612, guid: 8487e1ce1fba945f6939d25e93c517bf,
     type: 2}
 --- !u!4 &677022049

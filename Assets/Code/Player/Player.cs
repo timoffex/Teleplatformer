@@ -22,6 +22,13 @@ public class Player : MonoBehaviour {
 
 
 	/// <summary>
+	/// When the player grabs a rope, the physics connection (i.e. the Joint) is
+	/// created at this location. "Hold Rope" animations should move hands to this position.
+	/// </summary>
+	public Transform grabRopeLocation;
+
+
+	/// <summary>
 	/// All passive abilities attached to the player.
 	/// </summary>
 	private List<Ability> passiveAbilities = new List<Ability> ();
@@ -32,9 +39,16 @@ public class Player : MonoBehaviour {
 	private Ability[] activeAbilities = new Ability[System.Enum.GetNames (typeof (AbilityControlType)).Length - 1];
 
 
+
+	private bool isGrabbingObject = false;
+	private Joint2D grabbingJoint = null;
+
 	
 
-
+	/// <summary>
+	/// Determines whether the player is on the ground.
+	/// </summary>
+	/// <returns><c>true</c> if the player is grounded; otherwise, <c>false</c>.</returns>
 	public bool IsGrounded () {
 		// Find all objects that are intersecting with the ground check
 		RaycastHit2D[] raycastHits = new RaycastHit2D [10];
@@ -44,6 +58,47 @@ public class Player : MonoBehaviour {
 		return raycastHits.Take (numHits).Any ((hit) => !hit.collider.isTrigger && hit.collider.gameObject != gameObject);
 	}
 
+
+
+
+	/// <summary>
+	/// Grabs the specified object as if grabbing a rope.
+	/// </summary>
+	/// <param name="objectToGrab">The Rigidbody to which the physics Joint will be attached.</param>
+	/// <param name="whereToGrabIt">The global location where the rope should be grabbed. Can be null</param>
+	public void GrabRope (Rigidbody2D objectToGrab, Vector2? whereToGrabIt) {
+		// If we were grabbing something before, stop grabbing it.
+		if (isGrabbingObject)
+			Ungrab ();
+
+		// Create a HingeJoint which we will use to hold on to the object.
+		var hinge = gameObject.AddComponent<HingeJoint2D> ();
+
+		// Connect the hinge to /objectToGrab/ at location /whereToGrabIt/ (or the default location if /whereToGrabIt/ is null)
+		hinge.connectedBody = objectToGrab;
+
+		if (whereToGrabIt.HasValue) {
+			hinge.autoConfigureConnectedAnchor = false;
+			hinge.connectedAnchor = whereToGrabIt.Value - (Vector2)objectToGrab.transform.position;
+		} else
+			hinge.autoConfigureConnectedAnchor = true;
+
+		// Place the hinge at the offset of our /grabRopeLocation/
+		hinge.anchor = grabRopeLocation.position - transform.position;
+
+
+		// Remember that we're grabbing an object and keep a reference to the hinge
+		isGrabbingObject = true;
+		grabbingJoint = hinge;
+	}
+
+	/// <summary>
+	/// Ungrabs whatever the player is grabbing.
+	/// </summary>
+	public void Ungrab () {
+		Destroy (grabbingJoint);
+		isGrabbingObject = false;
+	}
 
 
 	/// <summary>
