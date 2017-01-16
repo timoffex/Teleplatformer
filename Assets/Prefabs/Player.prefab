@@ -111,6 +111,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1000011355943922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000011753080078}
+  m_Layer: 0
+  m_Name: Grabbing Location
+  m_TagString: Untagged
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1000011412871246
 GameObject:
   m_ObjectHideFlags: 1
@@ -308,7 +323,7 @@ Transform:
   - {fileID: 4000011203324450}
   - {fileID: 4000010015027024}
   m_Father: {fileID: 4000013351487106}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!4 &4000010424568162
 Transform:
   m_ObjectHideFlags: 1
@@ -323,7 +338,7 @@ Transform:
   - {fileID: 4000013026622054}
   - {fileID: 4000014291083208}
   m_Father: {fileID: 4000013351487106}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!4 &4000010577223510
 Transform:
   m_ObjectHideFlags: 1
@@ -349,7 +364,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -2.0760002}
   m_Children: []
   m_Father: {fileID: 4000013351487106}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &4000010827502734
 Transform:
   m_ObjectHideFlags: 1
@@ -362,7 +377,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013351487106}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &4000011203324450
 Transform:
   m_ObjectHideFlags: 1
@@ -388,7 +403,20 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -2.0760002}
   m_Children: []
   m_Father: {fileID: 4000013351487106}
-  m_RootOrder: 2
+  m_RootOrder: 3
+--- !u!4 &4000011753080078
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011355943922}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.449, y: 0.653, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4000013351487106}
+  m_RootOrder: 0
 --- !u!4 &4000012374605260
 Transform:
   m_ObjectHideFlags: 1
@@ -416,7 +444,7 @@ Transform:
   - {fileID: 4000010347369578}
   - {fileID: 4000012730654632}
   m_Father: {fileID: 4000013351487106}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!4 &4000012730654632
 Transform:
   m_ObjectHideFlags: 1
@@ -450,10 +478,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011130092234}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.7, y: -1.91, z: -0.001953125}
+  m_LocalPosition: {x: 6.534811, y: 1.5458229, z: -0.001953125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 13.971001}
   m_Children:
+  - {fileID: 4000011753080078}
   - {fileID: 4000010827502734}
   - {fileID: 4000010785027916}
   - {fileID: 4000011264453926}
@@ -477,7 +506,7 @@ Transform:
   - {fileID: 4000012374605260}
   - {fileID: 4000010577223510}
   m_Father: {fileID: 4000013351487106}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!4 &4000014291083208
 Transform:
   m_ObjectHideFlags: 1
@@ -581,7 +610,7 @@ MonoBehaviour:
   ability1Key: 114
   ability2Key: 116
   groundCheck: {fileID: 58000014220740996}
-  grabRopeLocation: {fileID: 0}
+  grabRopeLocation: {fileID: 4000011753080078}
 --- !u!114 &114000013671452498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -593,12 +622,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 259b7e441469149168926eca671f7be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionKey: 0
+  interactionKey: 101
   jumpDelay: 0.2
   maxSpeed: 3
   speedUpForce: 30
   slowDownForce: 60
-  jumpForce: 200
+  jumpForce: 400
 --- !u!212 &212000010333431588
 SpriteRenderer:
   m_ObjectHideFlags: 1
