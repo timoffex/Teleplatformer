@@ -189,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ca4c678e33244ebaefe6c3a9641eb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
 --- !u!1001 &124008900
 Prefab:
   m_ObjectHideFlags: 0
@@ -231,6 +232,8 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 55ff259f5184b4a3f9c21508f43e918c, type: 2}
   m_IsPrefabParent: 0
+=======
+>>>>>>> Stashed changes
 --- !u!1 &677022047
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,12 +281,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
---- !u!1 &682591731 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1000011294339062, guid: 55ff259f5184b4a3f9c21508f43e918c,
-    type: 2}
-  m_PrefabInternal: {fileID: 124008900}
+  m_RootOrder: 2
 --- !u!1 &892890242
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +310,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelGenerator: {fileID: 677022048}
-  playerPrefab: {fileID: 682591731}
+  playerPrefab: {fileID: 1000011294339062, guid: 55ff259f5184b4a3f9c21508f43e918c,
+    type: 2}
 --- !u!4 &892890244
 Transform:
   m_ObjectHideFlags: 0
@@ -325,4 +324,4 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
