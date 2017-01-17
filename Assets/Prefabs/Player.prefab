@@ -292,7 +292,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.42058378, w: 0.9072538}
   m_LocalPosition: {x: 0.088, y: -0.011, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 29.705002}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -25.204256}
   m_Children: []
   m_Father: {fileID: 4000010379358480}
   m_RootOrder: 1
@@ -318,7 +318,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.029, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 309.016}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 279.92822}
   m_Children:
   - {fileID: 4000011203324450}
   - {fileID: 4000010015027024}
@@ -333,7 +333,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.00053442223, w: 0.99999994}
   m_LocalPosition: {x: -0.069, y: 0.048, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -14.311579}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 38.918163}
   m_Children:
   - {fileID: 4000013026622054}
   - {fileID: 4000014291083208}
@@ -439,7 +439,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.204, y: 0.072, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -27.178001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -17.629148}
   m_Children:
   - {fileID: 4000010347369578}
   - {fileID: 4000012730654632}
@@ -454,7 +454,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.41718408, w: 0.90882206}
   m_LocalPosition: {x: 0.144, y: -0.007, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
-  m_LocalEulerAnglesHint: {x: 360, y: 360, z: 362.6251}
+  m_LocalEulerAnglesHint: {x: 360, y: 360, z: 396.81}
   m_Children: []
   m_Father: {fileID: 4000012462489616}
   m_RootOrder: 1
@@ -501,7 +501,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -14.801312}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -56.00138}
   m_Children:
   - {fileID: 4000012374605260}
   - {fileID: 4000010577223510}
@@ -611,6 +611,9 @@ MonoBehaviour:
   ability2Key: 116
   groundCheck: {fileID: 58000014220740996}
   grabRopeLocation: {fileID: 4000011753080078}
+  jumpMinHeight: 1
+  jumpMaxHeight: 3
+  jumpIncreaseTime: 0.3
 --- !u!114 &114000013671452498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -627,7 +630,6 @@ MonoBehaviour:
   maxSpeed: 3
   speedUpForce: 30
   slowDownForce: 60
-  jumpForce: 400
 --- !u!212 &212000010333431588
 SpriteRenderer:
   m_ObjectHideFlags: 1

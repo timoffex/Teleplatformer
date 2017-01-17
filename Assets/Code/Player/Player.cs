@@ -29,6 +29,22 @@ public class Player : MonoBehaviour {
 
 
 	/// <summary>
+	/// Minimum jump height.
+	/// </summary>
+	public float jumpMinHeight;
+
+	/// <summary>
+	/// Maximum jump height.
+	/// </summary>
+	public float jumpMaxHeight;
+
+	/// <summary>
+	/// How long should the player press the jump key to reach maximum jump height? (Seconds).
+	/// </summary>
+	public float jumpIncreaseTime;
+
+
+	/// <summary>
 	/// All passive abilities attached to the player.
 	/// </summary>
 	private List<Ability> passiveAbilities = new List<Ability> ();

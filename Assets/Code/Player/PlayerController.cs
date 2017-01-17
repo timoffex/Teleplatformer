@@ -35,12 +35,6 @@ public class PlayerController : MonoBehaviour {
 	/// </summary>
 	public float slowDownForce;
 
-	/// <summary>
-	/// The force to apply to the player for jumping.
-	/// </summary>
-	public float jumpForce;
-
-
 	private Rigidbody2D myRigidBody;
 	private Player myPlayer;
 
@@ -48,6 +42,13 @@ public class PlayerController : MonoBehaviour {
 	/// The object we are interacting with currently. Null if no object.
 	/// </summary>
 	private InteractableObject interactingObject;
+
+
+	/// <summary>
+	/// Reference to the jumping coroutine. Null if the coroutine is done.
+	/// </summary>
+	private Coroutine jumpCoroutine;
+
 
 	// This is for initializing variables
 	void Awake () {
@@ -58,23 +59,38 @@ public class PlayerController : MonoBehaviour {
 	// FixedUpdate is called once per frame and is synced with the physics system.
 	void FixedUpdate () {
 
-		// If pressing the jump button...
-		if (Input.GetKey (KeyCode.Space) || Input.GetKey (KeyCode.UpArrow)) {
-			
-			bool isGrounded = IsGrounded ();
-			bool timeGood = Time.fixedTime - lastJumpTime > jumpDelay;
 
-			// ... and if we're on the ground && enough time has passed since the last jump
-			if (isGrounded && timeGood) {
-				
+		#region Physics glitch quickfix.
 
-				// jump by applying an upward force!
-				myRigidBody.AddForce (Vector2.up * jumpForce);
+		// If we're moving too fast..
+		if (myRigidBody.velocity.sqrMagnitude > 40 * maxSpeed * maxSpeed) {
+			// Make us move slower.
+			myRigidBody.velocity *= maxSpeed * 2 / myRigidBody.velocity.magnitude;
+		}
 
-				// remember this as the most recent jump so that we don't jump too rapidly later
-				lastJumpTime = Time.fixedTime;
+		#endregion
+
+
+		// If we're on the ground...
+		if (IsGrounded ()) {
+
+			// If we were jumping...
+			if (jumpCoroutine != null) {
+
+				// Stop jumping! We're on the ground already.
+				StopCoroutine (jumpCoroutine);
+				jumpCoroutine = null;
 			}
 
+
+			// If we want to jump...
+			if (IsPressingJumpKey ()) {
+				// Then start the jumping process!
+				jumpCoroutine = StartCoroutine (JumpingProcess ());
+			}
+
+			// Speed up to the right if speed < maxSpeed, otherwise slow down.
+			SpeedUpRight ();
 		}
 
 
@@ -112,10 +128,6 @@ public class PlayerController : MonoBehaviour {
 				interactingObject = null;
 			}
 		}
-
-
-		// Speed up to the right if speed < maxSpeed, otherwise slow down.
-		SpeedUpRight ();
 	}
 
 
@@ -160,7 +172,61 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+
+	/// <summary>
+	/// This is the jumping coroutine. It exists mainly to control jump height.
+	/// </summary>
+	/// <returns>The process.</returns>
+	private IEnumerator JumpingProcess () {
+
+		// Helper variables
+		float hmin = myPlayer.jumpMinHeight;
+		float hmax = myPlayer.jumpMaxHeight;
+		float g = Vector2.Dot (Physics2D.gravity, Vector2.down);
+		float m = myRigidBody.mass;
+		float ds = Time.fixedDeltaTime;
+
+
+		Vector2 minImpulse = Vector2.up * m * Mathf.Sqrt (2 * g * hmin);
+		Vector2 maxImpulse = Vector2.up * m * Mathf.Sqrt (2 * g * hmax);
+
+		Vector2 deltaImpulsePerSec = (maxImpulse - minImpulse) / myPlayer.jumpIncreaseTime;
+		Vector2 deltaImpulsePerUpdate = deltaImpulsePerSec * ds;
+
+
+		float startTime = Time.fixedTime;
+
+
+		// First, apply the force we need to reach minimum jump height.
+		myRigidBody.AddForce (minImpulse / ds);
+
+
+		// Wait until next physics update.
+		yield return new WaitForFixedUpdate ();
+
+
+		var totalImpulseApplied = Vector2.zero;
+
+		// Then, while the jump key is being pressed and jumpIncreaseTime hasn't passed...
+		while (IsPressingJumpKey () && (Time.fixedTime - startTime < myPlayer.jumpIncreaseTime)) {
+
+			// Apply our incremental jumping force
+			myRigidBody.AddForce (deltaImpulsePerUpdate / ds);
+
+			totalImpulseApplied += deltaImpulsePerUpdate;
+			Debug.LogFormat ("Applied {0} / {1}", totalImpulseApplied, deltaImpulsePerSec * myPlayer.jumpIncreaseTime);
+
+
+			// Wait until next physics update.
+			yield return new WaitForFixedUpdate ();
+		}
+	}
+
 	public bool IsGrounded () {
 		return myPlayer.IsGrounded ();
+	}
+
+	private bool IsPressingJumpKey () {
+		return Input.GetKey (KeyCode.Space) || Input.GetKey (KeyCode.UpArrow);
 	}
 }
