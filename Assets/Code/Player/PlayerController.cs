@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour {
 
 
 			// Modified force that will not allow for any excess speed
-			var forceToApply = speedUpForce - excessChange * myRigidBody.mass / Time.fixedDeltaTime;
+			float forceToApply = speedUpForce - excessChange * myRigidBody.mass / Time.fixedDeltaTime;
 
 			// Apply our rightward force (Unity multiplies this by Time.fixedDeltaTime to get the change in momentum)
 			myRigidBody.AddForce (Vector2.right * forceToApply);
@@ -161,11 +161,11 @@ public class PlayerController : MonoBehaviour {
 			var changeInSpeed = slowDownForce * Time.fixedDeltaTime / myRigidBody.mass;
 
 			// If there is any excess, excessChange will be more than 0
-			var excessChange = Mathf.Max (0, changeInSpeed - (maxSpeed - xSpeed));
+			var excessChange = Mathf.Max (0, changeInSpeed - (xSpeed - maxSpeed));
 
 
 			// Modified force that will not allow for any excess change
-			var forceToApply = slowDownForce - excessChange * myRigidBody.mass / Time.fixedDeltaTime;
+			float forceToApply = slowDownForce - excessChange * myRigidBody.mass / Time.fixedDeltaTime;
 
 			// Apply our leftward force (Unity multiplies this by Time.fixedDeltaTime to get the change in momentum)
 			myRigidBody.AddForce (Vector2.left * forceToApply);
@@ -205,7 +205,8 @@ public class PlayerController : MonoBehaviour {
 		yield return new WaitForFixedUpdate ();
 
 
-		var totalImpulseApplied = Vector2.zero;
+		// For debugging purposes..
+//		var totalImpulseApplied = Vector2.zero;
 
 		// Then, while the jump key is being pressed and jumpIncreaseTime hasn't passed...
 		while (IsPressingJumpKey () && (Time.fixedTime - startTime < myPlayer.jumpIncreaseTime)) {
@@ -213,8 +214,8 @@ public class PlayerController : MonoBehaviour {
 			// Apply our incremental jumping force
 			myRigidBody.AddForce (deltaImpulsePerUpdate / ds);
 
-			totalImpulseApplied += deltaImpulsePerUpdate;
-			Debug.LogFormat ("Applied {0} / {1}", totalImpulseApplied, deltaImpulsePerSec * myPlayer.jumpIncreaseTime);
+//			totalImpulseApplied += deltaImpulsePerUpdate;
+//			Debug.LogFormat ("Applied {0} / {1}", totalImpulseApplied, deltaImpulsePerSec * myPlayer.jumpIncreaseTime);
 
 
 			// Wait until next physics update.

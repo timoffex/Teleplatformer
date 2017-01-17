@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 /* Written by Timofey Peshin (timoffex)
  * */
-[RequireComponent (typeof (Collider2D))]
 public class LevelChunk : MonoBehaviour {
 
 	/// <summary>
@@ -20,31 +19,70 @@ public class LevelChunk : MonoBehaviour {
 	public List<ChunkExitPoint> exitPoints;
 
 
-
 	/// <summary>
-	/// Chunk boundaries. This is used to figure out whether the chunk intersects
-	/// with another chunk during level generation. It is also used for scaling
-	/// the chunk outward to the right.
+	/// The chunk's boundaries. Calculated on Awake ().
 	/// </summary>
-	private Collider2D chunkCollider;
+	private Bounds chunkBounds;
+
 
 	void Awake () {
-		chunkCollider = GetComponent<Collider2D> ();
-
 		exitPoints = new List<ChunkExitPoint> ();
 
 		entryPoint = GetComponentInChildren<ChunkEntryPoint> ();
 		exitPoints.AddRange (GetComponentsInChildren<ChunkExitPoint> ());
+
+
+		CalculateBounds ();
 	}
-
-
 
 	public Bounds GetBoundingBox () {
-		return chunkCollider.bounds;
+		// Update bounds center
+
+		if (transform.hasChanged) {
+			CalculateBounds ();
+			transform.hasChanged = false;
+		}
+
+		return chunkBounds;
 	}
 
-	public Collider2D GetCollider () {
-		return chunkCollider;
+
+	/// <summary>
+	/// Calculates the chunkBounds by checking all of the colliders inside the chunk.
+	/// </summary>
+	private void CalculateBounds () {
+
+		// Initialize (minX, minY) and (maxX, maxY)
+		float minX = transform.position.x;
+		float minY = transform.position.y;
+		float maxX = minX;
+		float maxY = maxX;
+
+
+		// Get all colliders inside the chunk.
+		var childColliders = GetComponentsInChildren<Collider2D> ();
+
+
+		// For each collider inside the chunk...
+		foreach (var col in childColliders) {
+			// Update min/max positions accordingly
+
+			var bounds = col.bounds;
+
+			minX = Mathf.Min (minX, bounds.min.x);
+			minY = Mathf.Min (minY, bounds.min.y);
+
+			maxX = Mathf.Max (maxX, bounds.max.x);
+			maxY = Mathf.Max (maxY, bounds.max.y);
+		}
+
+
+		// Calculate center and size of the box from (minX, minY) to (maxX, maxY)
+		var center = new Vector3 ((minX + maxX) / 2, (minY + maxY) / 2, 0);
+		var size = new Vector3 ((maxX - minX) / 2, (maxY - minY) / 2, 0);
+
+		// Set our chunkBounds variable
+		chunkBounds = new Bounds (center, size);
 	}
 }
 

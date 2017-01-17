@@ -177,7 +177,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!114 &70200589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,12 +217,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allKnownChunks:
-  - {fileID: 114000013415123612, guid: 8487e1ce1fba945f6939d25e93c517bf, type: 2}
-  - {fileID: 114000013625042514, guid: 76113d2755eb543da9e035907e65af1c, type: 2}
-  - {fileID: 114000010797442564, guid: d40ce4ff7f270436c8b6ffd261668891, type: 2}
-  - {fileID: 114000010515358700, guid: e77c6e2ba54b44795b90e122543d4d6d, type: 2}
-  - {fileID: 114000013618872698, guid: fa2df4023341f44cd87689ec3fb96b71, type: 2}
-  startingChunk: {fileID: 114000013415123612, guid: 8487e1ce1fba945f6939d25e93c517bf,
+  - {fileID: 114000011185697078, guid: 24606b5741d914b2394d81141d03d03a, type: 2}
+  - {fileID: 114000012161547724, guid: 94479510c6fac4a6b842ef687302607d, type: 2}
+  - {fileID: 114000013787289264, guid: e635f3a5f8eb54312b2444f4bbbe4666, type: 2}
+  startingChunk: {fileID: 114000012161547724, guid: 94479510c6fac4a6b842ef687302607d,
     type: 2}
 --- !u!4 &677022049
 Transform:
@@ -289,11 +287,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000013351487106, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 6.534811
+      value: 1.71
       objectReference: {fileID: 0}
     - target: {fileID: 4000013351487106, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.5458229
+      value: 0.78
       objectReference: {fileID: 0}
     - target: {fileID: 4000013351487106, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
       propertyPath: m_LocalPosition.z
@@ -317,6 +315,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013351487106, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
       propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013671452498, guid: 8a1adc2734c144fa8aed06844ef6a5fa,
+        type: 2}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
