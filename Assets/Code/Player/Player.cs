@@ -10,6 +10,8 @@ using System.Linq;
 /// This is a container class for Player information: health, energy, abilities, etc.
 /// </summary>
 
+[RequireComponent (typeof (Rigidbody2D)),
+	RequireComponent (typeof (Animator))]
 public class Player : MonoBehaviour {
 
 
@@ -26,6 +28,9 @@ public class Player : MonoBehaviour {
 	/// created at this location. "Hold Rope" animations should move hands to this position.
 	/// </summary>
 	public Transform grabRopeLocation;
+
+
+	public float runSpeed;
 
 
 	/// <summary>
@@ -59,7 +64,22 @@ public class Player : MonoBehaviour {
 	private bool isGrabbingObject = false;
 	private Joint2D grabbingJoint = null;
 
+	private Rigidbody2D myRigidBody;
+	private Animator myAnimator;
 	
+
+	void Awake () {
+		myRigidBody = GetComponent<Rigidbody2D> ();
+		myAnimator = GetComponent<Animator> ();
+	}
+
+
+
+	void Update () {
+		myAnimator.SetFloat ("HorizontalSpeed", myRigidBody.velocity.x / runSpeed);
+	}
+
+
 
 	/// <summary>
 	/// Determines whether the player is on the ground.

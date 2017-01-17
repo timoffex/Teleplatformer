@@ -669,6 +669,7 @@ MonoBehaviour:
   ability2Key: 116
   groundCheck: {fileID: 58000014220740996}
   grabRopeLocation: {fileID: 4000011753080078}
+  runSpeed: 5
   jumpMinHeight: 1
   jumpMaxHeight: 3
   jumpIncreaseTime: 0.3
@@ -685,9 +686,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionKey: 101
   jumpDelay: 0.2
-  maxSpeed: 5
-  speedUpForce: 30
-  slowDownForce: 60
+  targetSpeed: 5
+  speedUpForce: 20
+  slowDownForce: 40
 --- !u!212 &212000010333431588
 SpriteRenderer:
   m_ObjectHideFlags: 1

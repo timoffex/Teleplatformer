@@ -15,12 +15,6 @@ public class PlayerController : MonoBehaviour {
 	/// Minimum number of seconds that must pass between jumps.
 	/// </summary>
 	public float jumpDelay;
-	private float lastJumpTime = 0;
-
-	/// <summary>
-	/// Maximum speed of the player in units per second.
-	/// </summary>
-	public float maxSpeed;
 
 	/// <summary>
 	/// The force to apply to the player when accelerating. The higher this is, the
@@ -34,6 +28,14 @@ public class PlayerController : MonoBehaviour {
 	/// be a positive number.
 	/// </summary>
 	public float slowDownForce;
+
+
+
+	/// <summary>
+	/// Target speed of the player in units per second.
+	/// </summary>
+	private float targetSpeed;
+
 
 	private Rigidbody2D myRigidBody;
 	private Player myPlayer;
@@ -63,12 +65,18 @@ public class PlayerController : MonoBehaviour {
 		#region Physics glitch quickfix.
 
 		// If we're moving too fast..
-		if (myRigidBody.velocity.sqrMagnitude > 40 * maxSpeed * maxSpeed) {
+		if (myRigidBody.velocity.sqrMagnitude > 40 * myPlayer.runSpeed * myPlayer.runSpeed) {
 			// Make us move slower.
-			myRigidBody.velocity *= maxSpeed * 2 / myRigidBody.velocity.magnitude;
+			myRigidBody.velocity *= myPlayer.runSpeed * 2 / myRigidBody.velocity.magnitude;
 		}
 
 		#endregion
+
+		// Set up target speed based on whether the player is pressing the right key.
+		if (Input.GetKey (KeyCode.RightArrow))
+			targetSpeed = myPlayer.runSpeed;
+		else
+			targetSpeed = 0;
 
 
 		// If we're on the ground...
@@ -137,7 +145,7 @@ public class PlayerController : MonoBehaviour {
 	private void SpeedUpRight () {
 		var xSpeed = myRigidBody.velocity.x;
 
-		if (xSpeed < maxSpeed) {
+		if (xSpeed < targetSpeed) {
 			// Speed up!
 
 
@@ -145,7 +153,7 @@ public class PlayerController : MonoBehaviour {
 			var changeInSpeed = speedUpForce * Time.fixedDeltaTime / myRigidBody.mass;
 
 			// If there is any excess, excessChange will be more than 0
-			var excessChange = Mathf.Max (0, changeInSpeed - (maxSpeed - xSpeed));
+			var excessChange = Mathf.Max (0, changeInSpeed - (targetSpeed - xSpeed));
 
 
 			// Modified force that will not allow for any excess speed
@@ -153,7 +161,7 @@ public class PlayerController : MonoBehaviour {
 
 			// Apply our rightward force (Unity multiplies this by Time.fixedDeltaTime to get the change in momentum)
 			myRigidBody.AddForce (Vector2.right * forceToApply);
-		} else if (xSpeed > maxSpeed) {
+		} else if (xSpeed > targetSpeed) {
 			// Slow down!
 
 
@@ -161,7 +169,7 @@ public class PlayerController : MonoBehaviour {
 			var changeInSpeed = slowDownForce * Time.fixedDeltaTime / myRigidBody.mass;
 
 			// If there is any excess, excessChange will be more than 0
-			var excessChange = Mathf.Max (0, changeInSpeed - (xSpeed - maxSpeed));
+			var excessChange = Mathf.Max (0, changeInSpeed - (xSpeed - targetSpeed));
 
 
 			// Modified force that will not allow for any excess change
