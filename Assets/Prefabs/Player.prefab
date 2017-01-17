@@ -322,11 +322,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.42058378, w: 0.9072538}
   m_LocalPosition: {x: 0.094, y: -0.121, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
-<<<<<<< HEAD
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -25.204256}
-=======
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -60.767002}
->>>>>>> origin/master
   m_Children: []
   m_Father: {fileID: 4000010379358480}
   m_RootOrder: 1
@@ -366,11 +362,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.029, y: -0.388, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-<<<<<<< HEAD
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 279.92822}
-=======
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 368.972}
->>>>>>> origin/master
   m_Children:
   - {fileID: 4000011203324450}
   - {fileID: 4000010015027024}
@@ -385,11 +377,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.00053442223, w: 0.99999994}
   m_LocalPosition: {x: -0.084, y: 0.005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-<<<<<<< HEAD
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 38.918163}
-=======
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -33.38375}
->>>>>>> origin/master
   m_Children:
   - {fileID: 4000013026622054}
   - {fileID: 4000014291083208}
@@ -495,11 +483,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.163, y: -0.345, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-<<<<<<< HEAD
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -17.629148}
-=======
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -83.64101}
->>>>>>> origin/master
   m_Children:
   - {fileID: 4000010347369578}
   - {fileID: 4000012730654632}
@@ -514,11 +498,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.41718408, w: 0.90882206}
   m_LocalPosition: {x: 0.12, y: -0.123, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
-<<<<<<< HEAD
   m_LocalEulerAnglesHint: {x: 360, y: 360, z: 396.81}
-=======
-  m_LocalEulerAnglesHint: {x: 360, y: 360, z: 312.48}
->>>>>>> origin/master
   m_Children: []
   m_Father: {fileID: 4000012462489616}
   m_RootOrder: 1
@@ -579,11 +559,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.125, y: -0.039, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-<<<<<<< HEAD
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -56.00138}
-=======
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.8048744}
->>>>>>> origin/master
   m_Children:
   - {fileID: 4000012374605260}
   - {fileID: 4000010577223510}
@@ -675,7 +651,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: 
+  m_WarningMessage:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114000013275631156
@@ -687,8 +663,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74cf909f5907c420a85f898f07c959ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   ability1Key: 114
   ability2Key: 116
   groundCheck: {fileID: 58000014220740996}
@@ -705,8 +681,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 259b7e441469149168926eca671f7be1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   interactionKey: 101
   jumpDelay: 0.2
   maxSpeed: 3
@@ -726,7 +702,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_SubsetIndices:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -759,7 +735,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_SubsetIndices:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -792,7 +768,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_SubsetIndices:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -825,7 +801,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_SubsetIndices:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -858,7 +834,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_SubsetIndices:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -891,7 +867,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_SubsetIndices:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -924,7 +900,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_SubsetIndices:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -957,7 +933,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_SubsetIndices:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -990,7 +966,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_SubsetIndices:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -1023,7 +999,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_SubsetIndices:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
