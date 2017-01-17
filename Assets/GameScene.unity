@@ -228,82 +228,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4000013299249754, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 15.940001
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010249305248, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 11.358291
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000014291083208, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 76.545006
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010424568162, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 26.008423
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000013299249754, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000013299249754, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000013701272352, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -41.77641
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010577223510, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -45.273003
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010379358480, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 313.06442
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010015027024, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 36.104
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000012462489616, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 303.31
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010015027024, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000012730654632, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 26.164007
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000012462489616, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000012730654632, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010424568162, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010424568162, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011264453926, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -15.687542
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011264453926, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8a1adc2734c144fa8aed06844ef6a5fa, type: 2}
   m_IsPrefabParent: 0
@@ -338,6 +262,7 @@ MonoBehaviour:
   - {fileID: 114000011185697078, guid: 24606b5741d914b2394d81141d03d03a, type: 2}
   - {fileID: 114000012161547724, guid: 94479510c6fac4a6b842ef687302607d, type: 2}
   - {fileID: 114000013787289264, guid: e635f3a5f8eb54312b2444f4bbbe4666, type: 2}
+  - {fileID: 114000010637905760, guid: b92266a524ce646c9896b3b834422558, type: 2}
   startingChunk: {fileID: 114000012161547724, guid: 94479510c6fac4a6b842ef687302607d,
     type: 2}
 --- !u!4 &677022049
