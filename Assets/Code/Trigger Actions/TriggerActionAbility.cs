@@ -10,7 +10,7 @@ public class TriggerActionAbility : TriggerAction {
 
 
 	public override void OnTrigger (Player p) {
-		p.AddAbility (abilityToAdd);
+		Ability.AddAbilityToPlayer (p, abilityToAdd);
 	}
 
 }

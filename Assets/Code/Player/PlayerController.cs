@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour {
 
 
 	/// <summary>
-	/// Target speed of the player in units per second.
+	/// The intended speed of the player in units per second.
 	/// </summary>
 	private float targetSpeed;
 
@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour {
 
 
 	/// <summary>
-	/// Tries to make right-ward speed match maxSpeed.
+	/// Tries to make right-ward speed match target speed.
 	/// </summary>
 	private void SpeedUpRight () {
 		var xSpeed = myRigidBody.velocity.x;

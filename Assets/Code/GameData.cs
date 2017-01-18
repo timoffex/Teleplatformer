@@ -49,6 +49,7 @@ public class GameData : MonoBehaviour {
 
 
 	void Update () {
+		// Generate the level a few units ahead of the player (20 units ≈ 4 seconds if the player moves at 5 u/s).
 		levelGenerator.GenerateChunksUpTo (player.transform.position.x + 20);
 	}
 }

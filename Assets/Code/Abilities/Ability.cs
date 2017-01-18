@@ -20,6 +20,28 @@ public abstract class Ability : ScriptableObject {
 
 
 	/// <summary>
+	/// Gives the player the ability, and starts up the ability.
+	/// </summary>
+	/// <param name="p">The player.</param>
+	/// <param name="a">The ability.</param>
+	public static void AddAbilityToPlayer (Player p, Ability a) {
+		Ability abilityInstance = Instantiate (a);
+
+		abilityInstance.OnBeforeAbilityAdded (p);
+		p.AddAbility (abilityInstance);
+	}
+
+
+	/// <summary>
+	/// Called right before the ability is added to the player.
+	/// Can be overriden for special behaviour.
+	/// </summary>
+	/// <param name="p">The player who will get this ability.</param>
+	public virtual void OnBeforeAbilityAdded (Player p) {
+
+	}
+
+	/// <summary>
 	/// Returns true if the ability is expired and should be removed.
 	/// </summary>
 	public abstract bool IsExpired ();
