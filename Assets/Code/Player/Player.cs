@@ -92,6 +92,7 @@ public class Player : MonoBehaviour, IObservable<Ability> {
 
 	void Update () {
 		myAnimator.SetFloat ("HorizontalSpeed", myRigidBody.velocity.x / runSpeed);
+		myAnimator.SetFloat ("VerticalSpeed", myRigidBody.velocity.y);
 	}
 
 
@@ -104,6 +105,7 @@ public class Player : MonoBehaviour, IObservable<Ability> {
 		// Find all objects that are intersecting with the ground check
 		RaycastHit2D[] raycastHits = new RaycastHit2D [10];
 		int numHits = groundCheck.Cast (Vector2.down, raycastHits, 0);
+
 
 		// Return true if the groundCheck intersects with a non-trigger collider that doesn't belong to the player body.
 		return raycastHits.Take (numHits).Any ((hit) => !hit.collider.isTrigger && hit.collider.gameObject != gameObject);
