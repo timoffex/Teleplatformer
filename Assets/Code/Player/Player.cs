@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+using System;
+using ObserverPattern;
+
 /* Written by Timofey Peshin (timoffex)
  * */
 
@@ -12,7 +15,7 @@ using System.Linq;
 
 [RequireComponent (typeof (Rigidbody2D)),
 	RequireComponent (typeof (Animator))]
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour, IObservable<Ability> {
 
 
 	public KeyCode ability1Key, ability2Key;
@@ -66,7 +69,19 @@ public class Player : MonoBehaviour {
 
 	private Rigidbody2D myRigidBody;
 	private Animator myAnimator;
-	
+
+
+
+	/* Observer pattern */
+	// An "observer pattern" is a code design pattern where an "observable" notifies its "observers"
+	// of particular changes. Observers can subscribe to an observable, and can unsubscribe using the
+	// IDisposable object the observable returns in its Subscribe() method.
+
+	private List<IObserver<Ability>> abilityObservers = new List<IObserver<Ability>> ();
+
+	/* Observer pattern */
+
+
 
 	void Awake () {
 		myRigidBody = GetComponent<Rigidbody2D> ();
@@ -149,6 +164,9 @@ public class Player : MonoBehaviour {
 			activeAbilities [(int)a.controlType - 1] = a;
 
 
+		// Notify observers of the new ability.
+		abilityObservers.ForEach ((obs) => obs.OnNext (a));
+
 
 		StartCoroutine (AbilityCoroutine (a));
 	}
@@ -201,5 +219,13 @@ public class Player : MonoBehaviour {
 		}
 
 
+	}
+
+
+
+	/* Observer pattern for observing ability changes. */
+	public IDisposable Subscribe (IObserver<Ability> observer) {
+		abilityObservers.Add (observer);
+		return new ListDisposable<IObserver<Ability>> (abilityObservers, observer);
 	}
 }
