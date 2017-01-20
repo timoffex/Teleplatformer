@@ -93,6 +93,7 @@ public class Player : MonoBehaviour, IObservable<Ability> {
 	void Update () {
 		myAnimator.SetFloat ("HorizontalSpeed", myRigidBody.velocity.x / runSpeed);
 		myAnimator.SetFloat ("VerticalSpeed", myRigidBody.velocity.y);
+		myAnimator.SetBool ("GroundCheck", IsGrounded ());
 	}
 
 
