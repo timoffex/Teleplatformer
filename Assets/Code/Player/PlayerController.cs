@@ -5,7 +5,7 @@ using System.Linq;
 /* Written by Timofey Peshin (timoffex)
  * */
 [RequireComponent (typeof (Rigidbody2D)),
-	RequireComponent (typeof (Player))]
+	RequireComponent (typeof (Player)), RequireComponent (typeof (Animator))]
 public class PlayerController : MonoBehaviour {
 
 	public KeyCode interactionKey;
@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour {
 
 	private Rigidbody2D myRigidBody;
 	private Player myPlayer;
+	private Animator myAnimator;
 
 	/// <summary>
 	/// The object we are interacting with currently. Null if no object.
@@ -56,6 +57,7 @@ public class PlayerController : MonoBehaviour {
 	void Awake () {
 		myRigidBody = GetComponent<Rigidbody2D> ();
 		myPlayer = GetComponent<Player> ();
+		myAnimator = GetComponent<Animator> ();
 	}
 	
 	// FixedUpdate is called once per frame and is synced with the physics system.
@@ -86,6 +88,8 @@ public class PlayerController : MonoBehaviour {
 			if (jumpCoroutine != null) {
 
 				// Stop jumping! We're on the ground already.
+				myAnimator.SetTrigger ("Landed");
+				Debug.Log ("Landed");
 				StopCoroutine (jumpCoroutine);
 				jumpCoroutine = null;
 			}
@@ -94,6 +98,8 @@ public class PlayerController : MonoBehaviour {
 			// If we want to jump...
 			if (IsPressingJumpKey ()) {
 				// Then start the jumping process!
+				myAnimator.SetTrigger ("Jumping");
+				Debug.Log ("Jumping");
 				jumpCoroutine = StartCoroutine (JumpingProcess ());
 			}
 
