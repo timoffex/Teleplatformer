@@ -6,7 +6,7 @@ using UnityEditor;
  * */
 public class PowerupCreation {
 
-	[MenuItem ("GameObject/Create Other/Powerup")]
+	[MenuItem ("GameObject/Powerups/Powerup", priority = 10)]
 	public static void CreatePowerup () {
 
 		// Load the default powerup.
@@ -26,16 +26,16 @@ public class PowerupCreation {
 		powerup.transform.position = (Vector2)SceneView.lastActiveSceneView.camera.transform.position;
 
 		// Select the new object.
-		Selection.activeObject = powerup;
+		Selection.activeObject = powerup.gameObject;
 
 		// Make this action undo-able
-		Undo.RecordObject (powerup, "Created Powerup");
+		Undo.RecordObject (powerup.gameObject, "Created Powerup");
 
-		// Ping it as a visual cue. -- this part doesn't work for some reason
-		EditorGUIUtility.PingObject (powerup);
+		// Ping it as a visual cue.
+		EditorGUIUtility.PingObject (powerup.gameObject);
 	}
 
-	[MenuItem ("GameObject/Create Other/Powerup Zone")]
+	[MenuItem ("GameObject/Powerups/Powerup Zone", priority = 10)]
 	public static void CreatePowerupZone () {
 
 		// Load the default powerup zone.
@@ -55,12 +55,12 @@ public class PowerupCreation {
 		powerupZone.transform.position = (Vector2)SceneView.lastActiveSceneView.camera.transform.position;
 
 		// Select the new object.
-		Selection.activeObject = powerupZone;
+		Selection.activeObject = powerupZone.gameObject;
 
 		// Make this action undo-able
-		Undo.RecordObject (powerupZone, "Created Powerup Zone");
+		Undo.RecordObject (powerupZone.gameObject, "Created Powerup Zone");
 
-		// Ping it as a visual cue. -- this part doesn't always work for some reason
-		EditorGUIUtility.PingObject (powerupZone);
+		// Ping it as a visual cue.
+		EditorGUIUtility.PingObject (powerupZone.gameObject);
 	}
 }
