@@ -9,8 +9,10 @@ public class ReplaceMeWithPrefab : MonoBehaviour {
 		// Instantiate the prefabToUse in the same parent as us.
 		var inst = Instantiate (prefabToUse, transform.parent) as GameObject;
 
-		// Move it to our position.
+		// Make its transform match ours.
 		inst.transform.position = transform.position;
+		inst.transform.rotation = transform.rotation;
+		inst.transform.localScale = transform.localScale;
 
 
 		// Destroy this object.

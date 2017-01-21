@@ -2,37 +2,38 @@
 using UnityEditor;
 
 using System.Collections.Generic;
+using System.Linq;
 
 
 public class ChunkPrefabWizard : ScriptableWizard {
 
 
-	[MenuItem ("Level Editor/Save Chunk", true)]
+	[MenuItem ("Level Editor/Save Chunk(s)", true)]
 	public static bool CheckIfChunkSelected () {
+		
+		var gos = Selection.gameObjects;
 
-		var go = Selection.activeObject;
-
-		if (go != null && go is GameObject) {
-			return (go as GameObject).GetComponent<LevelChunk> () != null;
+		if (gos != null) {
+			return gos.All ((go) => go.GetComponent<LevelChunk> () != null);
 		} else
 			return false;
 	}
 
 
 
-	[MenuItem ("Level Editor/Save Chunk")]
+	[MenuItem ("Level Editor/Save Chunk(s)")]
 	public static void SaveTheChunk () {
-		var wiz = ScriptableWizard.DisplayWizard<ChunkPrefabWizard> ("Save Chunk", "Save and Add To List");
+		var wiz = ScriptableWizard.DisplayWizard<ChunkPrefabWizard> ("Save Chunk(s)", "Save and Add To List");
 
 		// This is guaranteed to work because of the testing function defined above this one.
-		wiz.chunkToSave = (Selection.activeObject as GameObject).GetComponent<LevelChunk> ();
-		wiz.chunkName = Selection.activeObject.name;
+		wiz.chunksToSave = Selection.gameObjects.Select ((go) => go.GetComponent<LevelChunk> ()).ToArray ();
+		wiz.chunkNames = wiz.chunksToSave.Select ((chk) => chk.gameObject.name).ToArray ();
 	}
 
 
 
-	public LevelChunk chunkToSave;
-	public string chunkName;
+	public LevelChunk[] chunksToSave;
+	public string[] chunkNames;
 
 
 
@@ -43,32 +44,46 @@ public class ChunkPrefabWizard : ScriptableWizard {
 	}
 
 	void OnWizardCreate () {
-		// Create the chunk placeholder object
-
-		// First, clone our chunk
-		var clonedChunk = Instantiate (chunkToSave.gameObject) as GameObject;
-
-		// Then, recursively go through every child, and when encountering something
-		// that has a prefab, replace it with a ReplaceMeWithPrefab object.
-		MakePreservePrefabLinks (clonedChunk, chunkToSave.gameObject);
-
-		// Save the cloned chunk as a prefab
-		var prefab = PrefabUtility.CreatePrefab (string.Format ("Assets/Prefabs/Chunks/{0}.prefab", chunkName), clonedChunk);
-
-		// Destroy the clone
-		DestroyImmediate (clonedChunk);
-
-		// Ping and select the prefab
-		Selection.activeObject = prefab;
-		EditorGUIUtility.PingObject (prefab);
 
 
-		// Add the new chunk to the Level Generator
-		var levGenPrefab = AssetDatabase.LoadAssetAtPath<GameObject> ("Assets/Prefabs/Level Generation/LevelGenerator.prefab");
-		var levGenObj = PrefabUtility.InstantiatePrefab (levGenPrefab) as GameObject;
-		levGenObj.GetComponent<LevelGenerator> ().allKnownChunks.Add (prefab.GetComponent<LevelChunk> ());
-		PrefabUtility.ReplacePrefab (levGenObj, levGenPrefab);
-		DestroyImmediate (levGenObj);
+		List<Object> allChangedObjects = new List<Object> ();
+
+		// For each chunk:
+
+		for (int i = 0; i < chunksToSave.Length; i++) {
+			var chunkToSave = chunksToSave [i];
+			// Create the chunk placeholder object
+
+			// First, clone our chunk
+			var clonedChunk = Instantiate (chunkToSave.gameObject) as GameObject;
+
+			// Then, recursively go through every child, and when encountering something
+			// that has a prefab, replace it with a ReplaceMeWithPrefab object.
+			MakePreservePrefabLinks (clonedChunk, chunkToSave.gameObject);
+
+			// Save the cloned chunk as a prefab
+			var prefab = PrefabUtility.CreatePrefab (string.Format ("Assets/Prefabs/Chunks/{0}.prefab", chunkNames [i]), clonedChunk);
+
+			// Destroy the clone
+			DestroyImmediate (clonedChunk);
+
+
+			// Add the new chunk to the Level Generator
+			var levGenPrefab = AssetDatabase.LoadAssetAtPath<GameObject> ("Assets/Prefabs/Level Generation/LevelGenerator.prefab");
+			var levGenObj = PrefabUtility.InstantiatePrefab (levGenPrefab) as GameObject;
+			levGenObj.GetComponent<LevelGenerator> ().allKnownChunks.Add (prefab.GetComponent<LevelChunk> ());
+			PrefabUtility.ReplacePrefab (levGenObj, levGenPrefab);
+			DestroyImmediate (levGenObj);
+
+
+			allChangedObjects.Add (levGenPrefab);
+			allChangedObjects.Add (prefab);
+		}
+
+
+
+		this.ShowNotification (new GUIContent ("Success! Chunks saved in Assets/Prefabs/Chunks/"));
+		Undo.RecordObjects (allChangedObjects.ToArray (), "Chunks Saved and Level Generator Modified");
 	}
 
 	private void MakePreservePrefabLinks (GameObject obj, GameObject original) {
@@ -95,6 +110,8 @@ public class ChunkPrefabWizard : ScriptableWizard {
 
 				replacement.name = string.Format ("Link to {0}", childOriginal.name);
 				replacement.transform.position = child.position;
+				replacement.transform.rotation = child.rotation;
+				replacement.transform.localScale = child.localScale;
 
 
 				replacement.transform.SetParent (obj.transform);
@@ -112,40 +129,59 @@ public class ChunkPrefabWizard : ScriptableWizard {
 
 	protected override bool DrawWizardGUI () {
 
-		// Display selected chunk script
-		var newChunk = EditorGUILayout.ObjectField ("Chunk:", chunkToSave, typeof(LevelChunk), true) as LevelChunk;
 
-		if (newChunk != chunkToSave) {
-			chunkToSave = newChunk;
-			return true;
+		bool anythingChanged = false;
+
+		// For each chunk:
+
+		for (int i = 0; i < chunksToSave.Length; i++) {
+
+			var chunkToSave = chunksToSave [i];
+			var chunkName = chunkNames [i];
+
+
+			// Display selected chunk script
+			var newChunk = EditorGUILayout.ObjectField ("Chunk:", chunkToSave, typeof(LevelChunk), true) as LevelChunk;
+
+
+			// If chunk was changed...
+			if (newChunk != chunkToSave) {
+				// Save the change!
+				chunkToSave = chunksToSave [i] = newChunk;
+				anythingChanged = true;
+			}
+
+
+			// Display chunk name and new folder location
+			EditorGUILayout.BeginHorizontal ();
+
+			var nameLabel = "Will be saved to Assets/Prefabs/Chunks/";
+			var labelDimensions = GUI.skin.label.CalcSize (new GUIContent (nameLabel));
+			EditorGUILayout.LabelField (nameLabel, GUILayout.Width (labelDimensions.x));
+			var newName = EditorGUILayout.TextField (chunkName);
+			EditorGUILayout.EndHorizontal ();
+
+			// If name was changed...
+			if (newName != chunkName) {
+				// Save the change!
+				chunkName = chunkNames [i] = newName;
+				anythingChanged = true;
+			}
+
+
+			// Display the hierarchy of the way the chunk will be saved.
+			foreach (Transform child in chunkToSave.transform)
+				DisplayHierarchy (child.gameObject);
+		
+
+			EditorGUILayout.Space ();
 		}
 
-
-		// Display chunk name and new folder location
-		EditorGUILayout.BeginHorizontal ();
-
-		var nameLabel = "Will be saved to Assets/Prefabs/Chunks/";
-		var labelDimensions = GUI.skin.label.CalcSize(new GUIContent(nameLabel));
-		EditorGUILayout.LabelField (nameLabel, GUILayout.Width (labelDimensions.x));
-		var newName = EditorGUILayout.TextField (chunkName);
-		EditorGUILayout.EndHorizontal ();
-
-		if (newName != chunkName) {
-			chunkName = newName;
-			return true;
-		}
-
-
-
-		// Display paths
-		foreach (Transform child in chunkToSave.transform)
-			DisplayPaths (child.gameObject);
-
-		return false;
+		return anythingChanged;
 	}
 
 
-	private void DisplayPaths (GameObject obj) {
+	private void DisplayHierarchy (GameObject obj) {
 
 
 		// Display path for ourselves.
@@ -186,7 +222,7 @@ public class ChunkPrefabWizard : ScriptableWizard {
 			EditorGUI.indentLevel = oldIndent + 1;
 
 			foreach (Transform child in obj.transform)
-				DisplayPaths (child.gameObject);
+				DisplayHierarchy (child.gameObject);
 		}
 
 		// Reset indent.

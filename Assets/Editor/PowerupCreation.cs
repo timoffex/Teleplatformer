@@ -20,10 +20,16 @@ public class PowerupCreation {
 		// If an object is selected, add the powerup as its child.
 		var selection = Selection.activeGameObject;
 		if (selection != null)
-			powerup.transform.parent = selection.transform;
+			GameObjectUtility.SetParentAndAlign (powerup, selection);
 
 		// Position the powerup at the center of the screen.
 		powerup.transform.position = (Vector2)SceneView.lastActiveSceneView.camera.transform.position;
+
+		// Select the new object.
+		Selection.activeObject = powerup;
+
+		// Make this action undo-able
+		Undo.RecordObject (powerup, "Created Powerup");
 
 		// Ping it as a visual cue. -- this part doesn't work for some reason
 		EditorGUIUtility.PingObject (powerup);
@@ -43,10 +49,16 @@ public class PowerupCreation {
 		// If an object is selected, add the powerup zone as its child.
 		var selection = Selection.activeGameObject;
 		if (selection != null)
-			powerupZone.transform.parent = selection.transform;
+			GameObjectUtility.SetParentAndAlign (powerupZone, selection);
 
 		// Position the powerup zone at the center of the screen.
 		powerupZone.transform.position = (Vector2)SceneView.lastActiveSceneView.camera.transform.position;
+
+		// Select the new object.
+		Selection.activeObject = powerupZone;
+
+		// Make this action undo-able
+		Undo.RecordObject (powerupZone, "Created Powerup Zone");
 
 		// Ping it as a visual cue. -- this part doesn't always work for some reason
 		EditorGUIUtility.PingObject (powerupZone);
