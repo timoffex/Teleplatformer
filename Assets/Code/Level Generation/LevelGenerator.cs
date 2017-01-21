@@ -41,6 +41,20 @@ public class LevelGenerator : MonoBehaviour {
 		// Initialize variables
 		leafChunks = new List<LevelChunk> ();
 		allChunksSorted = new List<LevelChunk> ();
+
+		// Clean chunks of duplicates and nulls
+		allKnownChunks = allKnownChunks.Where ((ck) => ck != null).ToList ();
+		allKnownChunks.Sort ((a, b) => a.gameObject.name.CompareTo (b.gameObject.name));
+
+
+		List<LevelChunk> newChunks = new List<LevelChunk> ();
+
+		foreach (var chunk in allKnownChunks) {
+			if (newChunks.All ((c) => c.gameObject.name != chunk.gameObject.name))
+				newChunks.Add (chunk);
+		}
+
+		allKnownChunks = newChunks;
 	}
 
 
