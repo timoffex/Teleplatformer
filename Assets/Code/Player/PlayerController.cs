@@ -30,6 +30,17 @@ public class PlayerController : MonoBehaviour {
 	public float slowDownForce;
 
 
+	/// <summary>
+	/// The force to apply to the player when speeding up in mid-air.
+	/// </summary>
+	public float airSpeedUpForce;
+
+	/// <summary>
+	/// The force to apply to the player when slowing down in mid-air.
+	/// </summary>
+	public float airSlowDownForce;
+
+
 
 	/// <summary>
 	/// The intended speed of the player in units per second.
@@ -63,17 +74,6 @@ public class PlayerController : MonoBehaviour {
 	// FixedUpdate is called once per frame and is synced with the physics system.
 	void FixedUpdate () {
 
-
-		#region Physics glitch quickfix.
-
-		// If we're moving too fast..
-		if (myRigidBody.velocity.sqrMagnitude > 40 * myPlayer.runSpeed * myPlayer.runSpeed) {
-			// Make us move slower.
-			myRigidBody.velocity *= myPlayer.runSpeed * 2 / myRigidBody.velocity.magnitude;
-		}
-
-		#endregion
-
 		// Set up target speed based on whether the player is pressing the right key.
 		if (Input.GetKey (KeyCode.RightArrow))
 			targetSpeed = myPlayer.runSpeed;
@@ -104,7 +104,10 @@ public class PlayerController : MonoBehaviour {
 			}
 
 			// Speed up to the right if speed < maxSpeed, otherwise slow down.
-			SpeedUpRight ();
+			SpeedUpRight (speedUpForce, slowDownForce);
+		} else {
+			// Change speed using air accelerating forces.
+			SpeedUpRight (airSpeedUpForce, airSlowDownForce);
 		}
 
 
@@ -148,7 +151,7 @@ public class PlayerController : MonoBehaviour {
 	/// <summary>
 	/// Tries to make right-ward speed match target speed.
 	/// </summary>
-	private void SpeedUpRight () {
+	private void SpeedUpRight (float speedUpForce, float slowDownForce) {
 		var xSpeed = myRigidBody.velocity.x;
 
 		if (xSpeed < targetSpeed) {
